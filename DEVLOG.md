@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-01-29 01:10 — Prisma Fix (Server Restart Needed)
+
+**Issue:** API returning 500 error on /api/entries
+
+**Root cause:** Project was initialized with Prisma 7 which has breaking changes (adapter-based config). Downgraded to Prisma 6 for simpler setup.
+
+**Fixed:**
+- Downgraded prisma and @prisma/client to v6
+- Restored `url = env("DATABASE_URL")` in schema.prisma
+- Removed prisma.config.ts (Prisma 7 only)
+- Regenerated Prisma client
+
+**ACTION NEEDED:** Restart the Next.js dev server to clear Turbopack cache
+```bash
+# Kill the running server (Ctrl+C) then:
+npm run dev
+```
+
+**After restart, test:**
+1. Go to http://localhost:3000
+2. Click "Start Writing"
+3. Type an entry and click Save
+4. Should redirect to /journal/[id]
+
+---
+
 ## 2026-01-29 00:45 — Core MVP Complete
 
 **What happened:**
