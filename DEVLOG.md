@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-01-29 01:20 — Mobile UI Research Complete
+
+**Spawned sub-agent** to research mobile-first UI patterns. Results saved to `docs/MOBILE-UI.md`.
+
+**Key recommendations:**
+- Bottom navigation (3-4 items: Journal, Timeline, Insights, Settings)
+- Floating Action Button for "New Entry" - always visible
+- 16px minimum body text, 1.5x line height
+- Dark mode crucial for nighttime journaling
+- Swipe gestures on entries (archive, delete, favorite)
+- Progressive onboarding - don't overwhelm on first launch
+
+**Primary UX flow:**
+```
+Open → Prompt/Insight → FAB tap → Write → Save → Updated hierarchy → Close
+```
+
+**Next:** Implement mobile-first layout with bottom nav + FAB
+
+---
+
 ## 2026-01-29 01:10 — Prisma Fix (Server Restart Needed)
 
 **Issue:** API returning 500 error on /api/entries
