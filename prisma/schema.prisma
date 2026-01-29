@@ -1,0 +1,109 @@
+// Enso App Database Schema
+// Hierarchy-based journaling with AI analysis
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  entries        Entry[]
+  commitments    Commitment[]
+  insights       Insight[]
+  hierarchyState HierarchyState?
+}
+
+model Entry {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  analysis     EntryAnalysis?
+  commitments  Commitment[]
+  needsSignals NeedsSignal[]
+}
+
+model EntryAnalysis {
+  id        String   @id @default(cuid())
+  entryId   String   @unique
+  entry     Entry    @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  summary   String?
+  mood      String?
+  themes    String   @default("[]") // JSON array stored as string for SQLite
+  createdAt DateTime @default(now())
+}
+
+model Commitment {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entryId     String?
+  entry       Entry?           @relation(fields: [entryId], references: [id], onDelete: SetNull)
+  description String
+  dueDate     DateTime?
+  status      String           @default("ACTIVE") // ACTIVE, COMPLETED, MISSED, CANCELLED
+  completedAt DateTime?
+  level       String           // PHYSIOLOGICAL, SAFETY, BELONGING, ESTEEM, SELF_ACTUALIZATION
+  explicit    Boolean          @default(true) // Was this explicitly stated or inferred?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model NeedsSignal {
+  id        String   @id @default(cuid())
+  entryId   String
+  entry     Entry    @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  level     String   // PHYSIOLOGICAL, SAFETY, BELONGING, ESTEEM, SELF_ACTUALIZATION
+  strength  Float    // 0.0 to 1.0
+  context   String?  // Relevant excerpt from entry
+  createdAt DateTime @default(now())
+}
+
+model HierarchyState {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Current assessed state per level (0-100)
+  physiological     Float @default(50)
+  safety            Float @default(50)
+  belonging         Float @default(50)
+  esteem            Float @default(50)
+  selfActualization Float @default(50)
+
+  // Reliability scores per level (0-100, based on commitment follow-through)
+  reliabilityPhysiological     Float @default(0)
+  reliabilitySafety            Float @default(0)
+  reliabilityBelonging         Float @default(0)
+  reliabilityEsteem            Float @default(0)
+  reliabilitySelfActualization Float @default(0)
+
+  // Overall reliability score
+  reliabilityOverall Float @default(0)
+
+  updatedAt DateTime @updatedAt
+}
+
+model Insight {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String    // PATTERN, DRIFT, FOUNDATION, CELEBRATION, COMMITMENT
+  content     String
+  relevance   Float     @default(0.5) // 0-1, how important
+  surfacedAt  DateTime?
+  dismissedAt DateTime?
+  createdAt   DateTime  @default(now())
+}
