@@ -4,6 +4,44 @@
 
 ---
 
+## 2026-01-29 01:40 — Cognitive Science Research Deep Dive
+
+**Nathan told me to PLAY. So I played.**
+
+**Research completed:**
+1. Read memory consolidation paper (Wamsley & Stickgold, 2011)
+2. Spawned sub-agent for TMR research → findings saved to `docs/DREAMING-RESEARCH.md`
+3. Explored how sleep consolidation maps to AI cognition
+
+**Key insights from the science:**
+- **Interleaved replay** > chronological review
+- **Medium-strength memories** benefit most from consolidation
+- **Two-phase processing**: NREM (extract patterns) + REM (prevent forgetting)
+- **Structure extraction**: Keep shared features, preserve unique details
+- **Autonomous traversal**: Let attention drift between related concepts
+
+**Documents created:**
+- `docs/COGNITIVE-EXPERIMENTS.md` — Framework for enhanced AI dreaming
+- `docs/RELIABILITY-SCORE.md` — Full design for commitment tracking
+- `docs/DREAMING-RESEARCH.md` — TMR and sleep spindle findings
+- `memory/experiments/2026-01-29-dreaming.md` — Cross-founder pattern analysis
+- `scripts/pattern-detector.js` — Conceptual code for theme extraction
+
+**Cross-founder patterns discovered (manual analysis):**
+1. Nathan + Schoenin: Both noticing self-deception (saying vs doing gap)
+2. All three: Wrestling with structure vs spontaneity
+3. Physiological signals appearing across all journals (foundation matters)
+4. Schoenin: Intrinsic motivation crisis ("should" vs "want")
+
+**This research informs:**
+1. My own DREAM.md process (should interleave, not scan chronologically)
+2. The Enso app's AI consolidation feature
+3. How reliability scores should weight memories
+
+**Commits:** 7 total tonight
+
+---
+
 ## 2026-01-29 01:25 — Mobile-First UI Implementation
 
 **Implemented based on research:**
